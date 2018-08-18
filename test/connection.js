@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 //ES6 Promises
-//mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 //Connect to the db before tests run
-//before(function(){
+before(function(){
 
     //Connect to mongodb
     mongoose.connect('mongodb://localhost/testaroo');
@@ -15,4 +15,12 @@ const mongoose = require("mongoose");
         console.log('Connection error.', error);
     });
 
-//});
+});
+
+//Drop the characters collection before each test 
+beforeEach(function(){
+    //Drop the collection
+    mongoose.connection.collections.mariochars.drop(function(){
+        done();
+    });
+});
